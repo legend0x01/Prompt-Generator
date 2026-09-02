@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Generator - Algorithmic AI Prompt Engineering Studio</title>
+    <meta name="description" content="Generate high-performance, structured AI prompts with PTCC, CREATE, Chain-of-Thought, and Midjourney frameworks. 100% API-Free, deployable everywhere.">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Interactive Background Glow & Canvas -->
+    <div class="ambient-glow glow-1" aria-hidden="true"></div>
+    <div class="ambient-glow glow-2" aria-hidden="true"></div>
+    <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+    <!-- Navigation Header -->
+    <header class="navbar" role="banner">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand" aria-label="Prompt Generator Home">
+                <img src="assets/logo.svg" alt="Prompt Generator Logo" width="32" height="32" class="nav-logo">
+                <div class="brand-text">
+                    <span class="brand-title">Prompt Generator</span>
+                    <span class="brand-badge">AI Studio</span>
+                </div>
+            </a>
+
+            <!-- Quick Category Filter Bar -->
+            <nav class="nav-categories" id="navCategories" aria-label="Prompt Domains">
+                <button type="button" class="nav-cat-pill active" data-domain="all">All Domains</button>
+                <button type="button" class="nav-cat-pill" data-domain="code">
+                    <img src="assets/code.svg" width="14" height="14" alt="">
+                    <span>Code</span>
+                </button>
+                <button type="button" class="nav-cat-pill" data-domain="image">
+                    <img src="assets/image.svg" width="14" height="14" alt="">
+                    <span>Images</span>
+                </button>
+                <button type="button" class="nav-cat-pill" data-domain="copy">
+                    <img src="assets/copy.svg" width="14" height="14" alt="">
+                    <span>Copywriting</span>
+                </button>
+                <button type="button" class="nav-cat-pill" data-domain="research">
+                    <img src="assets/research.svg" width="14" height="14" alt="">
+                    <span>Research</span>
+                </button>
+                <button type="button" class="nav-cat-pill" data-domain="video">
+                    <img src="assets/video.svg" width="14" height="14" alt="">
+                    <span>Video</span>
+                </button>
+                <button type="button" class="nav-cat-pill" data-domain="agent">
+                    <img src="assets/agent.svg" width="14" height="14" alt="">
+                    <span>Agents</span>
+                </button>
+            </nav>
+
+            <div class="nav-actions">
+                <!-- Buy Me a Coffee Button -->
+                <button type="button" class="btn-coffee" id="coffeeBtn" aria-label="Support Project">
+                    <span class="coffee-emoji" aria-hidden="true">☕</span>
+                    <span>Support</span>
+                </button>
+
+                <!-- Contact Nav Button -->
+                <button type="button" class="icon-btn" id="contactNavBtn" aria-label="Contact Developer" title="Contact Developer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </button>
+
+                <!-- Dark / Light Theme Toggle -->
+                <button class="icon-btn theme-toggle-btn" id="themeToggle" aria-label="Toggle dark/light theme" type="button" title="Toggle Theme">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Application Container -->
+    <main class="main-content" id="mainContent">
+        <!-- Hero Section -->
+        <section class="hero-section" aria-labelledby="hero-title">
+            <div class="hero-badge">
+                <span class="pulse-dot"></span>
+                <span>Algorithmic Prompt Engineering • 100% API-Free</span>
+            </div>
+
+            <h1 id="hero-title" class="hero-title">
+                <span class="static-text">Engineer Better Prompts for</span>
+                <span class="typing-line-box">
+                    <span class="typing-text" id="typingText" aria-live="polite">... Coding, Claude, GPT & Midjourney</span>
+                    <span class="cursor" aria-hidden="true"></span>
+                </span>
+            </h1>
+
+            <p class="hero-subtitle">
+                Transform basic ideas into high-performance, structured AI master prompts with role personas, edge-case guardrails, chain-of-thought reasoning, and parameter presets.
+            </p>
+        </section>
+
+        <!-- Prompt Engineering Studio Workspace -->
+        <section class="studio-workspace" aria-label="Prompt Enhancement Studio">
+            <!-- Left: Prompt Configuration & Input Pane -->
+            <div class="panel input-panel">
+                <div class="panel-header">
+                    <div class="panel-title-group">
+                        <img src="assets/sparkles.svg" width="18" height="18" alt="">
+                        <h2 class="panel-title">Prompt Configuration</h2>
+                    </div>
+                    <button type="button" class="btn-ghost-sm" id="clearInputBtn" title="Clear Input">Clear</button>
+                </div>
+
+                <div class="panel-body">
+                    <!-- Controls Grid -->
+                    <div class="controls-grid">
+                        <!-- Domain Field -->
+                        <div class="control-group">
+                            <label for="domainSelect" class="control-label">Domain & Purpose</label>
+                            <div class="select-wrapper">
+                                <select id="domainSelect" class="control-select">
+                                    <option value="code" selected>💻 Coding & Systems Architecture</option>
+                                    <option value="image">🎨 Image Generation (Midjourney / Flux / SDXL)</option>
+                                    <option value="copy">📝 High-Conversion Copy & Marketing</option>
+                                    <option value="research">🔬 Academic & Research Synthesis</option>
+                                    <option value="video">🎬 Video & Motion Generation (Sora / Runway)</option>
+                                    <option value="agent">🤖 Autonomous AI Agent Persona</option>
+                                    <option value="general">⚡ General Universal Framework</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Framework Field -->
+                        <div class="control-group">
+                            <label for="frameworkSelect" class="control-label">Engineering Framework</label>
+                            <div class="select-wrapper">
+                                <select id="frameworkSelect" class="control-select">
+                                    <option value="ptcc" selected>PTCC (Persona, Task, Context, Constraints)</option>
+                                    <option value="create">CREATE (Character, Request, Examples, Adjustments)</option>
+                                    <option value="cot">CoT (Chain-of-Thought Multi-Stage Reasoning)</option>
+                                    <option value="rtf">RTF (Role, Task, Format Blueprint)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Tone Field -->
+                        <div class="control-group">
+                            <label for="toneSelect" class="control-label">Delivery Tone</label>
+                            <div class="select-wrapper">
+                                <select id="toneSelect" class="control-select">
+                                    <option value="authoritative" selected>Authoritative & Production-Ready</option>
+                                    <option value="technical">Senior Engineering & Precise</option>
+                                    <option value="socratic">Socratic & Analytical</option>
+                                    <option value="concise">Ultra-Concise & Telegram Density</option>
+                                    <option value="step_by_step">Step-by-Step Pedagogical</option>
+                                    <option value="conversational">Engaging & Magnetic</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Target AI Model -->
+                        <div class="control-group">
+                            <label for="targetAiSelect" class="control-label">Target Model</label>
+                            <div class="select-wrapper">
+                                <select id="targetAiSelect" class="control-select">
+                                    <option value="Claude 3.5 Sonnet" selected>Claude 3.5 Sonnet / Opus</option>
+                                    <option value="GPT-4o / ChatGPT">OpenAI GPT-4o / o1</option>
+                                    <option value="Midjourney v6">Midjourney v6.0 / Flux.1</option>
+                                    <option value="Cursor & Copilot">Cursor AI / Copilot</option>
+                                    <option value="Local Ollama / Llama 3">Local Ollama / Llama 3.2</option>
+                                    <option value="Universal LLM">Universal LLM Engine</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Raw Prompt Input Area -->
+                    <div class="input-area-group">
+                        <div class="input-area-header">
+                            <label for="rawPromptInput" class="control-label">Your Basic Idea or Raw Request</label>
+                            <span class="char-counter" id="charCounter">0 chars</span>
+                        </div>
+                        <textarea id="rawPromptInput" class="prompt-textarea" placeholder="e.g. Write a clean Python FastAPI authentication service with JWT tokens, rate limiting, and unit tests..." rows="6"></textarea>
+                    </div>
+
+                    <!-- Preset Quick Ideas Pills -->
+                    <div class="preset-pills-container">
+                        <span class="preset-label">Quick Ideas:</span>
+                        <div class="preset-pills" id="presetPills">
+                            <button type="button" class="preset-pill" data-text="Build a high-performance React component with custom hooks and TypeScript">React Component</button>
+                            <button type="button" class="preset-pill" data-text="Cyberpunk neon city street in rain with reflections and volumetric lighting">Cyberpunk Image</button>
+                            <button type="button" class="preset-pill" data-text="High-converting SaaS landing page hero section with objection handlers">SaaS Hero Copy</button>
+                            <button type="button" class="preset-pill" data-text="Perform a security audit of an Express.js payment gateway for OWASP vulnerabilities">Security Audit</button>
+                        </div>
+                    </div>
+
+                    <!-- Submit Enhance Button -->
+                    <div class="action-footer">
+                        <button type="button" class="btn btn-primary" id="enhanceBtn">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/>
+                            </svg>
+                            <span>Generate Master Prompt</span>
+                            <kbd class="btn-kbd">Ctrl + Enter</kbd>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Enhanced Master Prompt & Diagnostic Output Pane -->
+            <div class="panel output-panel">
+                <div class="panel-header">
+                    <div class="panel-title-group">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#10b981" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                        <h2 class="panel-title">Enhanced Master Prompt</h2>
+                    </div>
+
+                    <!-- Output Actions -->
+                    <div class="panel-header-actions">
+                        <button type="button" class="btn-action" id="copyPromptBtn" title="Copy Master Prompt">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                            <span>Copy</span>
+                        </button>
+                        <button type="button" class="btn-action" id="copySystemBtn" title="Copy as System Prompt">
+                            <span>System Prompt</span>
+                        </button>
+                        <button type="button" class="btn-action" id="exportJsonBtn" title="Export as JSON">
+                            <span>JSON</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel-body output-body">
+                    <!-- Real-Time Prompt Strength & Quality Meter -->
+                    <div class="strength-card" id="strengthCard">
+                        <div class="strength-main">
+                            <div class="strength-metric">
+                                <div class="strength-score-circle" id="strengthScoreCircle">
+                                    <span class="score-number" id="strengthScoreVal">94</span>
+                                    <span class="score-unit">/100</span>
+                                </div>
+                                <div class="strength-details">
+                                    <div class="strength-grade-row">
+                                        <span class="strength-grade-badge" id="strengthGradeBadge">Grade A+</span>
+                                        <span class="strength-title" id="strengthTitle">Elite Production Ready</span>
+                                    </div>
+                                    <p class="strength-desc" id="strengthDesc">Explicit role persona, rich context, strict negative guardrails, and output structure verified.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Strength Breakdown Bars -->
+                        <div class="strength-breakdown-grid" id="strengthBreakdownGrid">
+                            <div class="metric-bar-item">
+                                <div class="metric-bar-header">
+                                    <span>Role & Persona</span>
+                                    <span id="scoreRole">20/20</span>
+                                </div>
+                                <div class="metric-track"><div class="metric-fill" id="fillRole" style="width: 100%;"></div></div>
+                            </div>
+                            <div class="metric-bar-item">
+                                <div class="metric-bar-header">
+                                    <span>Context & Scope</span>
+                                    <span id="scoreContext">20/20</span>
+                                </div>
+                                <div class="metric-track"><div class="metric-fill" id="fillContext" style="width: 100%;"></div></div>
+                            </div>
+                            <div class="metric-bar-item">
+                                <div class="metric-bar-header">
+                                    <span>Constraints & Guardrails</span>
+                                    <span id="scoreConstraints">20/20</span>
+                                </div>
+                                <div class="metric-track"><div class="metric-fill" id="fillConstraints" style="width: 100%;"></div></div>
+                            </div>
+                            <div class="metric-bar-item">
+                                <div class="metric-bar-header">
+                                    <span>Output Format</span>
+                                    <span id="scoreFormat">20/20</span>
+                                </div>
+                                <div class="metric-track"><div class="metric-fill" id="fillFormat" style="width: 100%;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Variables Badges Section -->
+                    <div class="variables-section" id="variablesSection">
+                        <div class="variables-header">
+                            <span class="variables-title">Dynamic Variables</span>
+                            <span class="variables-hint">Click any tag to edit value</span>
+                        </div>
+                        <div class="variables-tags-list" id="variablesList">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Master Prompt Code Display -->
+                    <div class="output-preview-container">
+                        <div class="output-preview-toolbar">
+                            <span class="preview-tag" id="previewLangTag">Markdown Prompt</span>
+                            <span class="word-counter" id="outputWordCount">142 words</span>
+                        </div>
+                        <pre class="prompt-code-output" id="enhancedPromptOutput"><code><!-- Generated master prompt renders here --></code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Master Blueprints Vault Section -->
+        <section class="vault-section" id="vaultSection" aria-labelledby="vault-title">
+            <header class="section-header">
+                <div class="section-badge">Battle-Tested Library</div>
+                <h2 id="vault-title" class="section-title">Master Prompt Blueprints Vault</h2>
+                <p class="section-subtitle">Click any blueprint below to load it into the studio with pre-engineered variables and parameters.</p>
+            </header>
+
+            <div class="vault-grid" id="vaultGrid">
+                <!-- Rendered dynamically from templates.py -->
+            </div>
+        </section>
+
+        <!-- Features Matrix Section -->
+        <section class="features-section" aria-labelledby="features-title">
+            <header class="section-header">
+                <h2 id="features-title" class="section-title">Engineered for Flawless LLM Reasoning</h2>
+                <p class="section-subtitle">Why algorithmic prompt enhancement outperforms generic chat instructions.</p>
+            </header>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="assets/code.svg" width="22" height="22" alt=""></div>
+                    <h3 class="feature-title">PTCC & CREATE Frameworks</h3>
+                    <p class="feature-desc">Structures prompts around Persona, Task, Context, and Constraints to eliminate AI ambiguity and hallucination.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="assets/sparkles.svg" width="22" height="22" alt=""></div>
+                    <h3 class="feature-title">Chain-of-Thought Reasoning</h3>
+                    <p class="feature-desc">Forces models to evaluate trade-offs, break down assumptions, and reason step-by-step before producing final code or copy.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="assets/image.svg" width="22" height="22" alt=""></div>
+                    <h3 class="feature-title">Midjourney & Video Presets</h3>
+                    <p class="feature-desc">Automatically synthesizes lens types, camera moves, lighting, aspect ratios, and negative constraints for image/video models.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><img src="assets/agent.svg" width="22" height="22" alt=""></div>
+                    <h3 class="feature-title">100% API-Free & Private</h3>
+                    <p class="feature-desc">Runs entirely on self-contained Python algorithms & JavaScript. Zero API costs, zero data sent to third-party endpoints.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="assets/logo.svg" width="24" height="24" alt="">
+                <span>Prompt Generator AI Studio</span>
+            </div>
+            <p class="footer-copy">Built with Python & Vanilla JavaScript • 100% Free, Open Source & Deployable</p>
+        </div>
+    </footer>
+
+    <!-- Buy Me a Coffee Modal -->
+    <div class="modal-overlay" id="coffeeModal" role="dialog" aria-modal="true" aria-labelledby="coffeeModalTitle">
+        <div class="modal-card coffee-modal">
+            <button class="modal-close-btn" id="closeCoffeeModal" aria-label="Close modal">&times;</button>
+            <div class="coffee-icon-wrapper">
+                <span class="coffee-large-emoji">☕</span>
+            </div>
+            <h2 id="coffeeModalTitle" class="modal-title">Support Prompt Generator</h2>
+            <p class="modal-desc">
+                If Prompt Generator helps you engineer better AI prompts, save time, and build faster, support continued development!
+            </p>
+
+            <div class="qr-container">
+                <div class="qr-image-wrapper">
+                    <img src="assets/scanner.jpeg" alt="Scan QR Code to Support" class="qr-image" width="220" height="290" loading="lazy">
+                </div>
+                <span class="qr-caption">Scan with Google Pay, PhonePe, Paytm or any UPI app</span>
+            </div>
+
+            <div class="coffee-details">
+                <div class="upi-id-box">
+                    <span class="upi-label">UPI ID:</span>
+                    <code class="upi-code" id="upiIdText">traderabhinav699-2@oksbi</code>
+                </div>
+                <button type="button" class="btn btn-secondary w-full" id="copyUpiBtn">
+                    <span>Copy UPI ID</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Developer Modal -->
+    <div class="modal-overlay" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+        <div class="modal-card contact-modal">
+            <button class="modal-close-btn" id="closeContactModal" aria-label="Close modal">&times;</button>
+            <div class="contact-icon-wrapper">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                </svg>
+            </div>
+            <h2 id="contactModalTitle" class="modal-title">Get in Touch</h2>
+            <p class="modal-desc">Questions, feature suggestions, or custom AI prompt engineering workflows? Let's connect.</p>
+
+            <div class="contact-email-card">
+                <span class="email-label">Official Developer Contact</span>
+                <a href="mailto:traderabhinav699@gmail.com" class="email-link" id="contactEmailLink">traderabhinav699@gmail.com</a>
+                <button type="button" class="btn-copy-email" id="copyContactEmailBtn">Copy Email</button>
+            </div>
+
+            <div class="contact-topics">
+                <span class="topics-title">Quick Inquiries:</span>
+                <div class="contact-topic-list">
+                    <a href="mailto:traderabhinav699@gmail.com?subject=Prompt%20Generator%20Feature%20Request" class="topic-card-link">
+                        <span class="topic-icon">💡</span>
+                        <span>Feature Request</span>
+                    </a>
+                    <a href="mailto:traderabhinav699@gmail.com?subject=Prompt%20Generator%20Collaboration" class="topic-card-link">
+                        <span class="topic-icon">🤝</span>
+                        <span>Collaboration</span>
+                    </a>
+                    <a href="mailto:traderabhinav699@gmail.com?subject=Prompt%20Generator%20Feedback" class="topic-card-link">
+                        <span class="topic-icon">💬</span>
+                        <span>Feedback</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Variable Modal -->
+    <div class="modal-overlay" id="varModal" role="dialog" aria-modal="true" aria-labelledby="varModalTitle">
+        <div class="modal-card var-modal">
+            <button class="modal-close-btn" id="closeVarModal" aria-label="Close modal">&times;</button>
+            <h3 id="varModalTitle" class="modal-title">Edit Variable: <span id="varModalKey" class="highlight-var">{{key}}</span></h3>
+            <div class="control-group" style="margin: 1.25rem 0;">
+                <label for="varModalInput" class="control-label">Variable Value</label>
+                <textarea id="varModalInput" class="prompt-textarea" rows="3" placeholder="Enter new value..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" id="cancelVarBtn">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveVarBtn">Apply Variable</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
